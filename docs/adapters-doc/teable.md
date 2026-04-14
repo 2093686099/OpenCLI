@@ -43,6 +43,8 @@ opencli teable delete <表> <recXXX>
 
 TQL 使用 **Airtable 公式风格**：`{字段名}` 引用字段，字符串值用双引号。
 
+> **方言说明**：Teable TQL 只实现了 Airtable 公式的子集。已知**不支持**：`SEARCH()`、`FIND()`、`%` / `*` 通配符。子串匹配请用 `{字段} LIKE "关键词"`（裸关键词，不加任何通配符）。
+
 ### 基础运算符
 
 ```bash
