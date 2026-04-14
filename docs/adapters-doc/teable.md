@@ -52,8 +52,8 @@ TQL 使用 **Airtable 公式风格**：`{字段名}` 引用字段，字符串值
 # 不等于
 --tql '{状态} != "已归档"'
 
-# 包含（文本字段）
---tql 'SEARCH("关键词", {标题})'
+# 包含（文本字段）——LIKE 直接子串匹配，无需 % 通配符
+--tql '{标题} LIKE "关键词"'
 
 # 多条件 AND / OR
 --tql '{来源} = "邮件" AND {状态} = "待人工复核"'
@@ -168,7 +168,7 @@ opencli teable upsert 需求池 \
 - **multipleSelect**：传数组 `["选项A","选项B"]`；传字符串时 `typecast:true` 会自动转为单元素数组
 - **date 字段**：支持 `YYYY-MM-DD` 或 `YYYY-MM-DDTHH:mm:ssZ`
 - **名称缓存**：表名→ID 映射缓存 24 小时，在 UI 新增表后运行 `cache-refresh` 使其立即可用
-- **`--search` 已移除**：Teable API 无 `search` 参数，用 `--tql 'SEARCH("关键词", {字段名})'` 替代
+- **`--search` 已移除**：Teable API 无 `search` 参数，用 `--tql '{字段名} LIKE "关键词"'` 替代（LIKE 为直接子串匹配）
 
 ---
 
