@@ -57,6 +57,83 @@ opencli hackernews top --limit 5
 opencli bilibili hot --limit 5
 ```
 
+## 直接使用这个 Fork
+
+如果你想直接使用这个 fork，而不是安装上游 npm 包，推荐按源码方式安装：
+
+```bash
+git clone https://github.com/2093686099/OpenCLI.git
+cd OpenCLI
+npm install
+npm run build
+npm link
+```
+
+安装完成后，先检查 CLI 是否可用：
+
+```bash
+opencli --version
+opencli list
+```
+
+如果你不想用 `npm link`，也可以在仓库目录里直接运行构建产物：
+
+```bash
+node dist/src/main.js list
+node dist/src/main.js teable spaces
+```
+
+## Teable 快速开始
+
+这个 fork 已经集成 `teable` 适配器，可以直接通过 Teable REST API 读写记录，不需要 Browser Bridge 扩展。
+
+### 1. 配置环境变量
+
+```bash
+export TEABLE_TOKEN=你的_teable_api_token
+# 如果是自托管 Teable，再额外设置
+export TEABLE_BASE_URL=https://your-teable.example.com
+```
+
+### 2. 验证连接
+
+```bash
+opencli teable spaces
+opencli teable bases
+```
+
+### 3. 查看库和表结构
+
+```bash
+opencli teable tables <base名或ID>
+opencli teable schema <表名或ID>
+```
+
+### 4. 读写记录
+
+```bash
+opencli teable records <表名或ID> --limit 10
+opencli teable create <表名或ID> --fields '{"标题":"示例"}'
+opencli teable update <表名或ID> <recXXX> --fields '{"状态":"已完成"}'
+```
+
+### 5. 常见 Teable 工作流
+
+```bash
+# 新增一条反馈记录
+opencli teable create 试点反馈 --fields '{"标题":"登录报错","来源":"邮件","状态":"新建"}'
+
+# 用 TQL 按条件查询记录
+opencli teable records 试点反馈 --tql '{状态} = "新建" AND {来源} = "邮件"' --limit 20
+
+# 按标题幂等写入需求池
+opencli teable upsert 需求池 \
+  --match-field 标题 \
+  --fields '{"标题":"优化登录流程","优先级":"P1","来源":"试点"}'
+```
+
+更完整的命令示例、TQL 过滤、link 字段操作和排错说明，请查看 [`docs/adapters-doc/teable.md`](./docs/adapters-doc/teable.md)。
+
 ## 给人类用户
 
 如果你只是想稳定地调用网站或桌面应用能力，主路径很简单：

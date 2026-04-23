@@ -59,6 +59,83 @@ opencli hackernews top --limit 5
 opencli bilibili hot --limit 5
 ```
 
+## Use This Fork From Source
+
+If you want to use this fork directly instead of the upstream npm package, install from source:
+
+```bash
+git clone https://github.com/2093686099/OpenCLI.git
+cd OpenCLI
+npm install
+npm run build
+npm link
+```
+
+Then verify the CLI is available:
+
+```bash
+opencli --version
+opencli list
+```
+
+If you prefer not to use `npm link`, you can also run the built CLI directly from the repository:
+
+```bash
+node dist/src/main.js list
+node dist/src/main.js teable spaces
+```
+
+## Teable Quick Start
+
+This fork includes a `teable` adapter for reading and writing Teable records over the Teable REST API. Unlike browser-backed commands, `teable` does not require the Browser Bridge extension.
+
+### 1. Set environment variables
+
+```bash
+export TEABLE_TOKEN=your_teable_api_token
+# Optional for self-hosted Teable
+export TEABLE_BASE_URL=https://your-teable.example.com
+```
+
+### 2. Verify access
+
+```bash
+opencli teable spaces
+opencli teable bases
+```
+
+### 3. Discover tables and schema
+
+```bash
+opencli teable tables <base-name-or-id>
+opencli teable schema <table-name-or-id>
+```
+
+### 4. Read and write records
+
+```bash
+opencli teable records <table-name-or-id> --limit 10
+opencli teable create <table-name-or-id> --fields '{"Title":"Example"}'
+opencli teable update <table-name-or-id> <record-id> --fields '{"Status":"Done"}'
+```
+
+### 5. Common Teable workflows
+
+```bash
+# Create a feedback record
+opencli teable create Feedback --fields '{"Title":"Login error","Source":"email","Status":"New"}'
+
+# Query records with TQL
+opencli teable records Feedback --tql '{Status} = "New" AND {Source} = "email"' --limit 20
+
+# Upsert a requirement by title
+opencli teable upsert Requirements \
+  --match-field Title \
+  --fields '{"Title":"Improve login flow","Priority":"P1","Source":"pilot"}'
+```
+
+For more complete examples, TQL filters, linking records, and troubleshooting, see [`docs/adapters-doc/teable.md`](./docs/adapters-doc/teable.md).
+
 ## For Humans
 
 Use OpenCLI directly when you want a reliable command instead of a live browser session:
