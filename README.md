@@ -34,7 +34,7 @@ It also works as a **CLI hub** for local tools such as `gh`, `docker`, and other
 ### 1. Install OpenCLI
 
 ```bash
-npm install -g @jackwener/opencli
+npm install -g @2093686099/OpenCLI
 ```
 
 ### 2. Install the Browser Bridge Extension
