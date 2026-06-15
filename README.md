@@ -31,59 +31,41 @@ It also works as a **CLI hub** for local tools such as `gh`, `docker`, and other
 
 ## Quick Start
 
-### 1. Install OpenCLI
+本仓库是 [jackwener/opencli](https://github.com/jackwener/opencli) 的二次改造 fork，新增了 `teable` adapter（直连 Teable REST API，不需要浏览器扩展）。
 
-```bash
-npm install -g @jackwener/opencli
-```
+> **注意**：上游 npm 包 `@jackwener/opencli` 不包含 teable adapter，必须从本仓库源码安装。
 
-### 2. Install the Browser Bridge Extension
-
-OpenCLI connects to Chrome/Chromium through a lightweight Browser Bridge extension plus a small local daemon. The daemon auto-starts when needed.
-
-1. Download the latest `opencli-extension-v{version}.zip` from the GitHub [Releases page](https://github.com/jackwener/opencli/releases).
-2. Unzip it, open `chrome://extensions`, and enable **Developer mode**.
-3. Click **Load unpacked** and select the unzipped folder.
-
-### 3. Verify the setup
-
-```bash
-opencli doctor
-```
-
-### 4. Run your first commands
-
-```bash
-opencli list
-opencli hackernews top --limit 5
-opencli bilibili hot --limit 5
-```
-
-## Use This Fork From Source
-
-If you want to use this fork directly instead of the upstream npm package, install from source:
+### 1. 从源码安装
 
 ```bash
 git clone https://github.com/2093686099/OpenCLI.git
 cd OpenCLI
 npm install
 npm run build
-npm link
+npm link                 # 全局注册 opencli 命令
 ```
 
-Then verify the CLI is available:
+### 2. 验证安装
 
 ```bash
-opencli --version
-opencli list
+opencli --version        # 应输出 1.7.3
+opencli list             # 应看到 teable 等命令
 ```
 
-If you prefer not to use `npm link`, you can also run the built CLI directly from the repository:
+如果不想 `npm link`，也可以直接运行：
 
 ```bash
-node dist/src/main.js list
 node dist/src/main.js teable spaces
 ```
+
+### 3. （可选）安装浏览器扩展
+
+Teable 命令**不需要**浏览器扩展。但如果你要用 browser-backed 命令（bilibili、zhihu 等），需要装 Browser Bridge：
+
+1. Download the latest `opencli-extension-v{version}.zip` from the GitHub [Releases page](https://github.com/2093686099/OpenCLI/releases).
+2. Unzip it, open `chrome://extensions`, and enable **Developer mode**.
+3. Click **Load unpacked** and select the unzipped folder.
+4. 验证：`opencli doctor`
 
 ## Teable Quick Start
 
