@@ -6,6 +6,13 @@ import { CliError } from '@jackwener/opencli/errors';
 
 const DEFAULT_BASE_URL = 'https://teable.neuroncloud.ai';
 
+// Workaround: CloudFlare Origin CA cert is not in Node.js CA bundle,
+// Node.js fetch() doesn't respect NODE_TLS_REJECT_UNAUTHORIZED set as env var,
+// but does respect it when set programmatically before first TLS connection.
+if (!process.env.NODE_TLS_REJECT_UNAUTHORIZED) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 export function getToken() {
   const token = process.env.TEABLE_TOKEN;
   if (!token) {
