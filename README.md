@@ -35,27 +35,33 @@ It also works as a **CLI hub** for local tools such as `gh`, `docker`, and other
 
 > **注意**：上游 npm 包 `@jackwener/opencli` 不包含 teable adapter，必须从本仓库源码安装。
 
-### 1. 从源码安装
+前提：Node.js ≥ 21（`node -v` 检查）。
+
+### 1. 安装
+
+**一行命令（推荐）：**
+
+```bash
+npm install -g github:2093686099/OpenCLI
+```
+
+安装时会自动 build，装完直接可用。
+
+**或手动从源码安装：**
 
 ```bash
 git clone https://github.com/2093686099/OpenCLI.git
 cd OpenCLI
 npm install
 npm run build
-npm link                 # 全局注册 opencli 命令
+npm link
 ```
 
-### 2. 验证安装
+### 2. 验证
 
 ```bash
 opencli --version        # 应输出 1.7.3
 opencli list             # 应看到 teable 等命令
-```
-
-如果不想 `npm link`，也可以直接运行：
-
-```bash
-node dist/src/main.js teable spaces
 ```
 
 ### 3. （可选）安装浏览器扩展
